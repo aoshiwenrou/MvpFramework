@@ -1,0 +1,41 @@
+def keystoreFilepath = ''
+def keystorePSW = ''
+def keystoreAlias = ''
+def keystoreAliasPSW = ''
+
+// default keystore file, PLZ config file path in local.properties
+/*def keyfile = file('s.keystore.temp')
+
+Properties properties = new Properties()
+// 相关信息保存在local.properties中，local.properties文件要添加到ignore
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+keystoreFilepath = properties.getProperty("keystore.filePath")
+
+if (keystoreFilepath) {
+    keystorePSW = properties.getProperty("keystore.storePassword")
+    keystoreAlias = properties.getProperty("keystore.keyAlias")
+    keystoreAliasPSW = properties.getProperty("keystore.keyPassword")
+    keyfile = file(keystoreFilepath)
+}*/
+
+android {
+    signingConfigs{
+        release{
+            storeFile keyfile
+            storePassword keystorePSW
+            keyAlias keystoreAlias
+            keyPassword keystoreAliasPSW
+            v2SigningEnabled true
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release//设置签名信息
+        }
+        debug {
+            // 如果有需要，debug可以配置为正式签名
+           signingConfig signingConfigs.release//设置签名信息
+        }
+    }
+
+}

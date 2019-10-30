@@ -1,0 +1,30 @@
+apply plugin: 'com.android.application'
+apply from: "${rootDir}/aaconfig/versions.gradle"
+
+
+android {
+    compileSdkVersion configs.compileSdk
+
+    defaultConfig {
+        applicationId "com.evs.echarge.testclass"
+        minSdkVersion configs.minSdk
+        targetSdkVersion configs.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":network")
+    deps.add_google_support(dependencies)
+}

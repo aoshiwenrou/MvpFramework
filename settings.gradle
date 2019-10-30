@@ -1,0 +1,2 @@
+include ':app', ':common', ':network', ':testclass'
+rootProject.name='MvpFramework'

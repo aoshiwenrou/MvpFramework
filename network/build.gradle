@@ -1,0 +1,9 @@
+apply from: "${rootDir}/aaconfig/componentBuild.gradle"
+android { javaCompile compileOptions }
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    deps.add_rxjava(dependencies, "api")
+    deps.add_okhttp(dependencies, "api")
+    deps.add_retrofit(dependencies, "api")
+}

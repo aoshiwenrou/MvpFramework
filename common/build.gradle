@@ -1,0 +1,9 @@
+apply from: "${rootDir}/aaconfig/componentBuild.gradle"
+
+dependencies {
+    api project(path: ':network')
+    deps.add_loggerDep(dependencies, "api")
+    deps.add_util(dependencies, "api")
+    deps.add_aotusize(dependencies, "api")
+
+}

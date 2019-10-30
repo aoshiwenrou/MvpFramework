@@ -1,0 +1,19 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    apply from: "${rootDir}/aaconfig/versions.gradle"
+    repository(repositories)
+    dependencies {
+        classpath "com.android.tools.build:gradle:${configs.androidPlugin}"
+        classpath 'io.github.prototypez:app-joint:1.7'
+    }
+}
+
+allprojects {
+    apply from: "${rootDir}/aaconfig/versions.gradle"
+    repository(repositories)
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

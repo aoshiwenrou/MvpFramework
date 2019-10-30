@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+apply from: "${rootDir}/aaconfig/versions.gradle"
+
+android {
+    compileSdkVersion configs.compileSdk
+    defaultConfig {
+        minSdkVersion configs.minSdk
+        targetSdkVersion configs.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ AROUTER_MODULE_NAME : project.getName() ]
+            }
+        }
+    }
+
+    buildTypes {
+        release {// 生产环境
+            minifyEnabled true//是否对代码进行混淆
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'//指定混淆的规则文件
+        }
+        debug {// 测试环境
+            minifyEnabled false//是否对代码进行混淆
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'//指定混淆的规则文件
+        }
+    }
+
+    sourceSets {
+        main{
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    deps.add_google_support(dependencies)
+}

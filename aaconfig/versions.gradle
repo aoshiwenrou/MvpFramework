@@ -1,0 +1,181 @@
+def configs = [
+        minSdk         : 22,
+        targetSdk      : 28,
+        compileSdk     : 28,
+        androidPlugin  : '3.5.1',
+]
+ext.configs = configs
+
+def deps = [:]
+
+/*——————————————————————————add google_support——————————————————————————*/
+//添加 google_support
+def add_google_support(DependencyHandler handler) {
+    handler.add("implementation", "androidx.appcompat:appcompat:1.1.0")
+    handler.add("implementation", "androidx.constraintlayout:constraintlayout:1.1.3")
+    handler.add("implementation", "androidx.recyclerview:recyclerview:1.0.0")
+    handler.add("implementation", "androidx.lifecycle:lifecycle-extensions:2.2.0-beta01")
+    handler.add("implementation", "com.android.support:multidex:1.0.1")
+    handler.add("implementation", "com.trello.rxlifecycle2:rxlifecycle:2.2.0")
+    handler.add("implementation", "com.trello.rxlifecycle2:rxlifecycle-components:2.2.0")
+}
+deps.add_google_support = this.&add_google_support
+
+/*——————————————————————————add gson——————————————————————————*/
+//添加 google_support
+def add_gson(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.google.code.gson:gson:2.8.2")
+}
+deps.add_gson = this.&add_gson
+
+/*——————————————————————————add RxJava——————————————————————————*/
+//添加 rxjava
+def add_rxjava(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "io.reactivex.rxjava2:rxjava:2.1.12")
+    handler.add(mode, "io.reactivex.rxjava2:rxandroid:2.0.2")
+}
+deps.add_rxjava = this.&add_rxjava
+
+/*——————————————————————————add OkHttp——————————————————————————*/
+//添加 okhttp
+def add_okhttp(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.squareup.okhttp3:okhttp:3.10.0")
+    handler.add(mode, "com.squareup.okhttp3:logging-interceptor:3.10.0")
+}
+deps.add_okhttp = this.&add_okhttp
+
+/*——————————————————————————add Retrofit——————————————————————————*/
+//添加 retrofit
+def add_retrofit(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.squareup.retrofit2:retrofit:2.6.1")
+    handler.add(mode, "com.squareup.retrofit2:adapter-rxjava2:2.6.1")
+    handler.add(mode, "com.squareup.retrofit2:converter-scalars:2.6.1")
+    handler.add(mode, "com.squareup.retrofit2:converter-gson:2.6.1")
+}
+deps.add_retrofit = this.&add_retrofit
+
+/*——————————————————————————add Logger——————————————————————————*/
+// 查阅方便的log日志。 https://github.com/orhanobut/logger
+def add_loggerDep(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.orhanobut:logger:2.2.0")
+}
+deps.add_loggerDep = this.&add_loggerDep
+
+/*——————————————————————————工具集——————————————————————————*/
+//B大的各种Util库。 https://github.com/Blankj/AndroidUtilCode
+def add_util(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.blankj:utilcode:1.25.9")
+}
+deps.add_util = this.&add_util
+
+/*——————————————————————————imageloader——————————————————————————*/
+//添加 imageloader
+def add_image(DependencyHandler handler, String mode = "implementation") {
+    // TODO 这个换掉，用glide或者fresco
+    handler.add(mode, "com.ladingwu.library:glide:0.0.9")
+    handler.add(mode, "com.ladingwu.library:imageloader-framework:0.0.9")
+}
+deps.add_image = this.&add_image
+
+/*——————————————————————————aotusize——————————————————————————*/
+// 今日头条的自动适配方案。 https://github.com/JessYanCoding/AndroidAutoSize
+def add_aotusize(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "me.jessyan:autosize:1.1.2")
+}
+deps.add_aotusize = this.&add_aotusize
+
+/*——————————————————————————FlycoTabLayout_Lib——————————————————————————*/
+// 多功能的TabLayout。 https://github.com/H07000223/FlycoTabLayout
+def add_tablayout(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar")
+}
+deps.add_tablayout = this.&add_tablayout
+
+/*——————————————————————————FlycoTabLayout_Lib——————————————————————————*/
+// 多功能的Dialog。 https://github.com/H07000223/FlycoDialog_Master
+def add_dialog(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.flyco.dialog:FlycoDialog_Lib:1.3.2@aar")
+}
+deps.add_dialog = this.&add_dialog
+
+/*——————————————————————————Banner——————————————————————————*/
+// 多功能的Banner。 https://github.com/youth5201314/banner
+def add_banner(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.youth.banner:banner:1.4.10")
+}
+deps.add_banner = this.&add_banner
+
+/*——————————————————————————update——————————————————————————*/
+// 版本升级库。 https://github.com/teprinciple/UpdateAppUtils
+def add_update(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.teprinciple:updateapputilsX:2.1.0")
+}
+deps.add_update = this.&add_update
+
+/*——————————————————————————adapter——————————————————————————*/
+// 强大的adapter辅助器。 https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+def add_adapter(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.48-androidx")
+}
+deps.add_adapter = this.&add_adapter
+/*——————————————————————————wexing登录——————————————————————————*/
+//微信登录。 https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+def add_weixin(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+")
+}
+deps.add_weixin = this.&add_weixin
+
+/*——————————————————————————Appjoint——————————————————————————*/
+
+//添加 location
+def add_appjoint(DependencyHandler handler, String mode = "implementation ") {
+    handler.add(mode, "io.github.prototypez:app-joint-core:1.7")
+}
+deps.add_appjoint = this.&add_appjoint
+/*——————————————————————————pullrefresh——————————————————————————*/
+// 各种效果的下拉刷新。 https://github.com/scwang90/SmartRefreshLayout
+def add_pullrefresh(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0")
+    handler.add(mode, "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0")
+}
+deps.add_pullrefresh = this.&add_pullrefresh
+
+/*——————————————————————————FlowLayout——————————————————————————*/
+// FlowLayout。 https://github.com/hongyangAndroid/FlowLayout
+def add_flowLayout(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.hyman:flowlayout-lib:1.1.2"){
+        exclude group: 'com.android.support'
+    }
+}
+deps.add_flowLayout = this.&add_flowLayout
+
+/*——————————————————————————RangeSeekBar——————————————————————————*/
+// 各种效果的下拉刷新。 https://github.com/hongyangAndroid/FlowLayout
+def add_rangeSeekBar(DependencyHandler handler, String mode = "implementation") {
+    handler.add(mode, "com.github.Jay-Goo:RangeSeekBar:3.0.0")
+}
+deps.add_rangeSeekBar = this.&add_rangeSeekBar
+
+/*——————————————————————————repository——————————————————————————*/
+def repository(RepositoryHandler handler) {
+    handler.mavenCentral()
+    handler.maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    handler.maven { url 'https://maven.google.com/' }
+    handler.maven { url 'https://jitpack.io' }
+    handler.maven { url 'https://dl.bintray.com/umsdk/release' }
+    handler.maven { url 'http://jcenter.bintray.com/' }
+    handler.google()
+    handler.jcenter()
+}
+ext.repository = this.&repository
+
+/*——————————————————————————javaCompile——————————————————————————*/
+
+def javaCompile(compileOptions) {
+    compileOptions.sourceCompatibility JavaVersion.VERSION_1_8
+    compileOptions.targetCompatibility JavaVersion.VERSION_1_8
+}
+ext.javaCompile = this.&javaCompile
+
+//导出
+ext.deps = deps

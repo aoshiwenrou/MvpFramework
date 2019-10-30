@@ -177,7 +177,7 @@ public class HttpRequester {
      * @param url
      * @param params
      */
-    public Observable<String> doGet(String url, Map<String, String> params) {
+    public Observable<String> doGet(String url, Map<String, Object> params) {
         return doGet(HttpSettings.getInstance().getBaseUrl(), url, params);
     }
 
@@ -190,9 +190,11 @@ public class HttpRequester {
      * @param url
      * @param params
      */
-    public Observable<String> doGet(String baseUrl, String url, Map<String, String> params) {
+    public Observable<String> doGet(String baseUrl, String url, Map<String, Object> params) {
         CommonApi api = getHttpApi(baseUrl);
-        if(api == null)
+        if (api == null)
+            return null; // TODO 要不要抛出异常
+
         excuteParams(params);
         String[] urlPath = url.split("/");
         switch (urlPath.length) {
@@ -223,7 +225,7 @@ public class HttpRequester {
      * @param url
      * @param params
      */
-    public Observable<String> doPostForm(String url, Map<String, String> params) {
+    public Observable<String> doPostForm(String url, Map<String, Object> params) {
         return doPostForm(HttpSettings.getInstance().getBaseUrl(), url, params);
     }
 
@@ -236,8 +238,11 @@ public class HttpRequester {
      * @param url
      * @param params
      */
-    public Observable<String> doPostForm(String baseUrl, String url, Map<String, String> params) {
+    public Observable<String> doPostForm(String baseUrl, String url, Map<String, Object> params) {
         CommonApi api = getHttpApi(baseUrl);
+        if (api == null)
+            return null; // TODO 要不要抛出异常
+
         excuteParams(params);
         String[] urlPath = url.split("/");
         switch (urlPath.length) {
@@ -283,7 +288,7 @@ public class HttpRequester {
      */
     public Observable<String> doPostJson(String baseUrl, String url, Object params) {
         CommonApi api = getHttpApi(baseUrl);
-        if(api == null)
+        if (api == null)
             return null; // TODO 要不要抛出异常
 
         String jsonParams = (params instanceof String) ? (String) params : new Gson().toJson(params);
@@ -316,11 +321,11 @@ public class HttpRequester {
      *
      * @param params
      */
-    private void excuteParams(Map<String, String> params) {
+    private void excuteParams(Map<String, Object> params) {
         if (params == null || params.isEmpty())
             return;
         for (String key : params.keySet())
-            if (TextUtils.isEmpty(params.get(key)))
+            if (params.get(key) == null)
                 params.put(key, "");
     }
 

@@ -68,6 +68,21 @@ public abstract class BaseFragment extends Fragment {
     protected void initData() {
     }
 
+    //--------------------------- 判断登录 ----------------------------------------------
+
+    public boolean isUserLogin() {
+        // TODO 判断用户是否登录
+        return false;
+    }
+
+    public void checkLogin(ILoginCallback callback) {
+        if (isUserLogin()) {
+            callback.onLogined();
+        } else {
+            // TODO 跳转登录，继续做处理
+        }
+    }
+
     //--------------------------- 通用事件 ----------------------------------------------
 
     public void showLoading() {

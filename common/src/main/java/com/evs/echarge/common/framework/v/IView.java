@@ -24,7 +24,7 @@ public interface IView extends LifecycleOwner {
     /**
      * 隐藏loading
      */
-    void hideLoading();
+    void dismissLoading();
 
     /**
      * 显示错误信息

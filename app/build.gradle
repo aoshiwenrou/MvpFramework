@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
+apply from: "${rootDir}/aaconfig/versions.gradle" //版本及依賴配置
+apply from: "${rootDir}/aaconfig/buildTypes.gradle" //构造类型配置
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion configs.compileSdk
+
     defaultConfig {
         applicationId "com.evs.echarge.mvpframework"
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion configs.minSdk
+        targetSdkVersion configs.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -21,9 +23,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    deps.add_google_support(dependencies)
+    api project(path: ':common')
 }

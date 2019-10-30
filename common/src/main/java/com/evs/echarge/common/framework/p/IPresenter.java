@@ -12,9 +12,9 @@ public interface IPresenter<V extends IView> extends LifecycleObserver {
     /**
      * 绑定 View
      *
-     * @param mView view
+     * @param view
      */
-    void attachView(V mView);
+    void attachView(V view);
 
     /**
      * 解除 View

@@ -9,7 +9,9 @@ import com.evs.echarge.common.util.AssertUtils;
  */
 public class NetError extends BaseResponseBean<String> {
 
-    public NetError(){}
+    public NetError(){
+        setStatus(FAILED);
+    }
 
     public NetError(BaseResponseBean response){
         AssertUtils.checkNull(response);

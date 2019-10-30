@@ -24,27 +24,27 @@ public class BaseNetService {
         return HttpSettings.getInstance().getBaseUrl();
     }
 
-    public Observable<String> get(String url, Map<String,String> params){
+    public Observable<String> get(String url, Map<String,Object> params){
         return get(getBaseUrl(), url, params);
     }
 
-    public Observable<String> get(String base, String url, Map<String,String> params){
+    public Observable<String> get(String base, String url, Map<String,Object> params){
         return HttpRequester.get().doGet(base, url, params);
     }
 
-    public Observable<String> postForm(String url, Map<String,String> params){
+    public Observable<String> postForm(String url, Map<String,Object> params){
         return postForm(getBaseUrl(), url, params);
     }
 
-    public Observable<String> postForm(String base, String url, Map<String,String> params){
+    public Observable<String> postForm(String base, String url, Map<String,Object> params){
         return HttpRequester.get().doPostForm(base, url, params);
     }
 
-    public Observable<String> postJson(String url, Map<String,String> params){
+    public Observable<String> postJson(String url, Object params){
         return postJson(getBaseUrl(), url, params);
     }
 
-    public Observable<String> postJson(String base, String url, Map<String,String> params){
+    public Observable<String> postJson(String base, String url, Object params){
         return HttpRequester.get().doPostJson(base, url, params);
     }
 }

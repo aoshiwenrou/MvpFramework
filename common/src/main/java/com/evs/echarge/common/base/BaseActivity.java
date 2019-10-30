@@ -44,7 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @return
      */
-    protected abstract  @LayoutRes int getLayoutResId();
+    protected abstract @LayoutRes
+    int getLayoutResId();
 
     /**
      * 在初始化view之前获取数据，一般是获取上一个页面传过来的intent extra
@@ -106,21 +107,36 @@ public abstract class BaseActivity extends AppCompatActivity {
         window.setStatusBarColor(Color.TRANSPARENT);
     }
 
+    //--------------------------- 判断登录 ----------------------------------------------
+
+    public boolean isUserLogin() {
+        // TODO 判断用户是否登录
+        return false;
+    }
+
+    public void checkLogin(ILoginCallback callback) {
+        if (isUserLogin()) {
+            callback.onLogined();
+        } else {
+            // TODO 跳转登录，继续做处理
+        }
+    }
+
     //--------------------------- 通用事件 ----------------------------------------------
 
-    public void showLoading(){
+    public void showLoading() {
         DialogUtils.showLoadingDialog(this);
     }
 
-    public void showLoading(@StringRes int msg){
+    public void showLoading(@StringRes int msg) {
         DialogUtils.showLoadingDialog(this, msg);
     }
 
-    public void showLoading(String msg){
+    public void showLoading(String msg) {
         DialogUtils.showLoadingDialog(this, msg);
     }
 
-    public void dismissLoading(){
+    public void dismissLoading() {
         DialogUtils.dismissLoadingDialog(this);
     }
 }

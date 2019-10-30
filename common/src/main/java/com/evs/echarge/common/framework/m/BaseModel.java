@@ -1,19 +1,16 @@
 package com.evs.echarge.common.framework.m;
 
-import android.text.TextUtils;
-
-import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.JsonUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.evs.echarge.common.network.BaseResponseBean;
 import com.evs.echarge.common.network.INetCallback;
 import com.evs.echarge.common.network.NetError;
 import com.evs.echarge.common.util.AssertUtils;
 
 import java.lang.reflect.Type;
-import java.net.ResponseCache;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -31,27 +28,26 @@ public class BaseModel implements IModel {
     private CompositeDisposable compositeDisposable;
 
     private void addDisposable(Disposable d) {
-        if(compositeDisposable == null)
+        if (compositeDisposable == null)
             compositeDisposable = new CompositeDisposable();
         compositeDisposable.add(d);
     }
 
-    private void removeDisposable(Disposable d){
-        if(compositeDisposable == null)
+    private void removeDisposable(Disposable d) {
+        if (compositeDisposable == null)
             return;
         compositeDisposable.remove(d);
     }
 
     /**
-     *
      * @param observable
      * @param clazz
      * @param isBase
      * @param callback
      */
-    public void excuteObserver(Observable<String> observable, final Type clazz, final boolean isBase, final INetCallback callback){
+    public void excuteObserver(Observable<String> observable, final Type clazz, final boolean isBase, final INetCallback callback) {
         // 加载之前预处理
-        if(callback != null)
+        if (callback != null)
             callback.onPreLoad();
 
         observable.subscribeOn(Schedulers.io())
@@ -77,51 +73,68 @@ public class BaseModel implements IModel {
                         AssertUtils.checkTrue(callback.onPreExcute(s));
 
                         // 是base形式的请求
-                        if(isBase){
+                        if (isBase) {
                             excuteBaseResponse(s, clazz, callback);
-                        }else{
+                        } else {
                             excuteOtherResponse(s, clazz, callback);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        // 事件已经注销，不继续处理
+                        AssertUtils.checkTrue(mDisposable.isDisposed());
+                        // 返回结果为空，不继续处理
+                        AssertUtils.checkNull(callback);
 
+                        NetError error = new NetError();
+                        error.setMessage(e.getMessage());
+                        callback.onError(error);
                     }
 
                     @Override
                     public void onComplete() {
-
+                        // 事件已经注销，不继续处理
+                        AssertUtils.checkTrue(mDisposable.isDisposed());
                     }
                 });
     }
 
     /**
      * 处理基础响应
+     *
      * @param s
      * @param clazz
      * @param callback
      */
     private void excuteBaseResponse(String s, Type clazz, INetCallback callback) {
-        BaseResponseBean response = GsonUtils.fromJson(s, clazz);
-        if(response.isSuccess()){
+        BaseResponseBean response = new BaseResponseBean();
+        response.setStatus(JsonUtils.getInt(s, "status"));
+        response.setMessage(JsonUtils.getString(s, "message"));
+        response.setTimestamp(JsonUtils.getLong(s, "timestamp"));
+        response.setData(GsonUtils.fromJson(JsonUtils.getString(s, "data"), clazz));
+        if (response.isSuccess()) {
             callback.onExcute(response.getData());
-        }else{
+        } else {
             callback.onError(new NetError(response));
         }
     }
 
     /**
      * 处理其他响应，主要用于处理第三方接口
+     *
      * @param s
      * @param clazz
      * @param callback
      */
     private void excuteOtherResponse(String s, Type clazz, INetCallback callback) {
+        callback.onExcute(GsonUtils.fromJson(s, clazz));
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     @Override
     public void onDestroy() {
         //可以做一些 统一的处理
+        compositeDisposable.dispose();
     }
 }
